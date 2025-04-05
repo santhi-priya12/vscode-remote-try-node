@@ -1,0 +1,47 @@
+module hamming_64(din,dec_out);
+	input [64:1]din;
+	reg [7:1]p,s;
+	reg [71:1]eo,dec_in;
+	output reg [71:1]dec_out;    //eo is encoder output, dec_in is decoder input
+	integer i;
+	initial
+	begin
+		//encoding
+		eo = {din[64],din[63],din[62],din[61],din[60],din[59],din[58],p[7],din[57],din[56],din[55],din[54],din[53],din[52],din[51],din[50],din[49],din[48],din[47],din[46],din[45],din[44],din[43],din[42],din[41],din[40],din[39],din[38],din[37],din[36],din[35],din[34],din[33],din[32],
+		      din[31],din[30],din[29],din[28],din[27],p[6],din[26],din[25],din[24],din[23],din[22],din[21],din[20],din[19],din[18],din[17],din[16],din[15],din[14],din[13],din[12],p[5],din[11],din[10],din[9],din[8],din[7],din[6],din[5],p[4],din[4],din[3],din[2],p[3],din[1],p[2],p[1]};
+		for(i=1;i<=71;i=i+2)
+		    p[1] = ^{eo[i],p[1]};
+		//p[1]= ^{eo[1],eo[3],eo[5],eo[7],eo[9],eo[11],eo[13],eo[15],eo[17],eo[19],eo[21],eo[22],eo[23],eo[25],eo[27],eo[29],eo[31],eo[33],eo[35],eo[37],eo[39],eo[41],eo[43],eo[45],eo[47],eo[49],eo[51]
+		
+		p[2] = ^{eo[3],eo[6],eo[7],eo[10],eo[11],eo[14],eo[15],eo[18],eo[19],eo[22],eo[23],eo[26],eo[27],eo[30],eo[31],eo[34],eo[35],eo[38],eo[39],eo[42],eo[43],eo[46],eo[47],eo[50],eo[51],eo[54],eo[55],eo[58],eo[59],eo[62],eo[63],eo[66],eo[67],eo[70],eo[71]};
+		p[3] = ^{eo[5],eo[6],eo[7],eo[12],eo[13],eo[14],eo[15],eo[20],eo[21],eo[22],eo[23],eo[28],eo[29],eo[30],eo[31],eo[36],eo[37],eo[38],eo[39],eo[44],eo[45],eo[46],eo[47],eo[52],eo[53],eo[54],eo[55],eo[60],eo[61],eo[62],eo[63],eo[68],eo[69],eo[70],eo[71]};
+		p[4] = ^{eo[9],eo[10],eo[11],eo[12],eo[13],eo[14],eo[15],eo[24],eo[25],eo[26],eo[27],eo[28],eo[29],eo[30],eo[31],eo[40],eo[41],eo[42],eo[43],eo[44],eo[45],eo[46],eo[47],eo[56],eo[57],eo[58],eo[59],eo[60],eo[61],eo[62],eo[63]};
+		p[5] = ^{eo[17],eo[18],eo[19],eo[20],eo[21],eo[22],eo[23],eo[24],eo[25],eo[26],eo[27],eo[28],eo[29],eo[30],eo[31],eo[48],eo[49],eo[50],eo[51],eo[52],eo[53],eo[54],eo[55],eo[56],eo[57],eo[58],eo[59],eo[60],eo[61],eo[62],eo[63]};
+		p[6] = ^{eo[33],eo[34],eo[35],eo[36],eo[37],eo[38],eo[39],eo[40],eo[41],eo[42],eo[43],eo[44],eo[45],eo[46],eo[47],eo[48],eo[49],eo[50],eo[51],eo[52],eo[53],eo[54],eo[55],eo[56],eo[57],eo[58],eo[59],eo[60],eo[61],eo[62],eo[63]};
+		p[7] = ^{eo[65],eo[66],eo[67],eo[68],eo[69],eo[70],eo[71]};
+
+		eo = {din[64],din[63],din[62],din[61],din[60],din[59],din[58],p[7],din[57],din[56],din[55],din[54],din[53],din[52],din[51],din[50],din[49],din[48],din[47],din[46],din[45],din[44],din[43],din[42],din[41],din[40],din[39],din[38],din[37],din[36],din[35],din[34],din[33],din[32],
+		      din[31],din[30],din[29],din[28],din[27],p[6],din[26],din[25],din[24],din[23],din[22],din[21],din[20],din[19],din[18],din[17],din[16],din[15],din[14],din[13],din[12],p[5],din[11],din[10],din[9],din[8],din[7],din[6],din[5],p[4],din[4],din[3],din[2],p[3],din[1],p[2],p[1]};
+
+		//decoding
+		for(i=1;i<=71;i=i+2)
+		    p[1] = ^{dec_in[i],p[1]};
+		p[2] = ^{dec_in[2],dec_in[3],dec_in[6],dec_in[7],dec_in[10],dec_in[11],dec_in[14],dec_in[15],dec_in[18],dec_in[19],dec_in[22],dec_in[23],dec_in[26],dec_in[27],dec_in[30],dec_in[31],dec_in[34],dec_in[35],dec_in[38],dec_in[39],dec_in[42],dec_in[43],dec_in[46],dec_in[47],dec_in[50],dec_in[51],dec_in[54],dec_in[55],dec_in[58],dec_in[59],dec_in[62],dec_in[63],dec_in[66],dec_in[67],dec_in[70],dec_in[71]};
+		p[3] = ^{dec_in[4],dec_in[5],dec_in[6],dec_in[7],dec_in[12],dec_in[13],dec_in[14],dec_in[15],dec_in[20],dec_in[21],dec_in[22],dec_in[23],dec_in[28],dec_in[29],dec_in[30],dec_in[31],dec_in[36],dec_in[37],dec_in[38],dec_in[39],dec_in[44],dec_in[45],dec_in[46],dec_in[47],dec_in[52],dec_in[53],dec_in[54],dec_in[55],dec_in[60],dec_in[61],dec_in[62],dec_in[63],dec_in[68],dec_in[69],dec_in[70],dec_in[71]};
+		p[4] = ^{dec_in[8],dec_in[9],dec_in[10],dec_in[11],dec_in[12],dec_in[13],dec_in[14],dec_in[15],dec_in[24],dec_in[25],dec_in[26],dec_in[27],dec_in[28],dec_in[29],dec_in[30],dec_in[31],dec_in[40],dec_in[41],dec_in[42],dec_in[43],dec_in[44],dec_in[45],dec_in[46],dec_in[47],dec_in[56],dec_in[57],dec_in[58],dec_in[59],dec_in[60],dec_in[61],dec_in[62],dec_in[63]};
+		p[5] = ^{dec_in[16],dec_in[17],dec_in[18],dec_in[19],dec_in[20],dec_in[21],dec_in[22],dec_in[23],dec_in[24],dec_in[25],dec_in[26],dec_in[27],dec_in[28],dec_in[29],dec_in[30],dec_in[31],dec_in[48],dec_in[49],dec_in[50],dec_in[51],dec_in[52],dec_in[53],dec_in[54],dec_in[55],dec_in[56],dec_in[57],dec_in[58],dec_in[59],dec_in[60],dec_in[61],dec_in[62],dec_in[63]};
+		p[6] = ^{dec_in[32],dec_in[33],dec_in[34],dec_in[35],dec_in[36],dec_in[37],dec_in[38],dec_in[39],dec_in[40],dec_in[41],dec_in[42],dec_in[43],dec_in[44],dec_in[45],dec_in[46],dec_in[47],dec_in[48],dec_in[49],dec_in[50],dec_in[51],dec_in[52],dec_in[53],dec_in[54],dec_in[55],dec_in[56],dec_in[57],dec_in[58],dec_in[59],dec_in[60],dec_in[61],dec_in[62],dec_in[63]};
+		p[7] = ^{dec_in[64],dec_in[65],dec_in[66],dec_in[67],dec_in[68],dec_in[69],dec_in[70],dec_in[71]};
+		
+		s = {p[7],p[6],p[5],p[4],p[3],p[2],p[1]};
+		if(s == 0)
+		    $display("no errors in the data");
+		else	
+		begin
+		    $display("error detected in the bit position %d",s);
+		    dec_out = dec_in;
+		    dec_out[s] = ~dec_in[s];
+		    $display("corrected value is %b",dec_out);	
+		end
+	end
+endmodule
